@@ -1,28 +1,29 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.DataProtection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using projetoCaixa.Models;
 using System.IdentityModel.Tokens.Jwt;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Text;
 
 namespace projetoCaixa.Service
 {
-    public class TokenService
+    public class TokenService : ITokenService
     {
 
-        public TokenService(IConfiguration configuration)
-        {
-            IConfiguration _configuration;
-            _configuration = configuration;
-        }
-        public static string CreateToken(User user)
-        {
-            
-            IConfiguration _configuration;
-            _configuration = 
+        private readonly string secretKey = string.Empty;
 
+        public TokenService(IConfiguration _configuration)
+        {
+
+            secretKey = _configuration.GetSection("AppSettings:Secret").Value!;
+        }
+
+        public async Task<string> CreateToken(User user)
+        {
             var jwtHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration.GetSection("AppSettings:Secret").Value!);
+            var key = Encoding.ASCII.GetBytes(secretKey);
             var tokenDescription = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
