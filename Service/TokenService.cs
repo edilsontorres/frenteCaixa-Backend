@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.DataProtection;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using projetoCaixa.Models;
+using projetoCaixa.Service.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
-using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Text;
 
@@ -16,7 +14,6 @@ namespace projetoCaixa.Service
 
         public TokenService(IConfiguration _configuration)
         {
-
             secretKey = _configuration.GetSection("AppSettings:Secret").Value!;
         }
 

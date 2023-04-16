@@ -1,13 +1,27 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using projetoCaixa.Data;
+using projetoCaixa.Repositorie;
+using projetoCaixa.Repositorie.Iterfaces;
 using projetoCaixa.Service;
+using projetoCaixa.Service.Interfaces;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+//Politica de Cors, liberando hosts
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder => {
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
+
+// Buscando as informações do meu Contexto e conectando com o Banco de Dados configurado no appsettings.json
+builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DataBase")));
+
 var primaryKey = builder.Configuration.GetValue<string>("AppSettings:Secret");
 var key = Encoding.ASCII.GetBytes(primaryKey!);   
 builder.Services.AddAuthentication(x =>
@@ -35,6 +49,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

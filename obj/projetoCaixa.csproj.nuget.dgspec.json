@@ -1,28 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\victor.silva\\Documents\\Estudos\\C#\\frenteCaixa-Backend\\projetoCaixa.csproj": {}
+    "C:\\Projeto\\projetoCaixa\\projetoCaixa.csproj": {}
   },
   "projects": {
-    "C:\\Users\\victor.silva\\Documents\\Estudos\\C#\\frenteCaixa-Backend\\projetoCaixa.csproj": {
+    "C:\\Projeto\\projetoCaixa\\projetoCaixa.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\victor.silva\\Documents\\Estudos\\C#\\frenteCaixa-Backend\\projetoCaixa.csproj",
+        "projectUniqueName": "C:\\Projeto\\projetoCaixa\\projetoCaixa.csproj",
         "projectName": "projetoCaixa",
-        "projectPath": "C:\\Users\\victor.silva\\Documents\\Estudos\\C#\\frenteCaixa-Backend\\projetoCaixa.csproj",
-        "packagesPath": "C:\\Users\\victor.silva\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\victor.silva\\Documents\\Estudos\\C#\\frenteCaixa-Backend\\obj\\",
+        "projectPath": "C:\\Projeto\\projetoCaixa\\projetoCaixa.csproj",
+        "packagesPath": "C:\\Users\\edilson\\.nuget\\packages\\",
+        "outputPath": "C:\\Projeto\\projetoCaixa\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\victor.silva\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 18.2.config",
+          "C:\\Users\\edilson\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\DevExpress 18.2\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -52,15 +50,29 @@
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
-              "version": "[7.0.4, )"
+              "version": "[7.0.5, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
-              "version": "[7.0.3, )"
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.5, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.4.0, )"
+              "version": "[6.5.0, )"
             }
           },
           "imports": [
@@ -82,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }
