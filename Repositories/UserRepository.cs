@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using projetoCaixa.Data;
+﻿using projetoCaixa.Data;
 using projetoCaixa.Models;
 using projetoCaixa.Repositorie.Iterfaces;
 
@@ -13,12 +12,16 @@ namespace projetoCaixa.Repositorie
         {
             _context = context;
         }
-        public void NewUser(User user)
+        public Task<User> NewUser(User user)
         {
             _context.Add(user);
-            
+            return Task<User>.FromResult(user);
         }
-
+        public async Task<User> GetUser(int Id)
+        {
+            var users = await _context.Users.FindAsync(Id);
+            return users!;
+        }
         public Task<string> UpdateUser(User user)
         {
             throw new NotImplementedException();

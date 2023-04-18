@@ -1,27 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.WebEncoders.Testing;
 using projetoCaixa.Models;
-using projetoCaixa.Repositorie;
 using projetoCaixa.Repositorie.Iterfaces;
+
 
 namespace projetoCaixa.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/cadastro")]
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
+       
+        
         public UserController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
+            
         }
-
+        
         [HttpPost]
         public async Task<ActionResult> NewUser(User user)
         {
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash);
             user.PasswordHash = passwordHash;
-            _userRepository.NewUser(user);
+            await _userRepository.NewUser(user);
 
            if(await _userRepository.SalveAllAsync())
            {
