@@ -12,6 +12,7 @@ namespace projetoCaixa.Repositorie
         {
             _context = context;
         }
+
         public Task<User> NewUser(User user)
         {
             _context.Add(user);

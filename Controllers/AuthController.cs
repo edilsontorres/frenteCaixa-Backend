@@ -44,7 +44,7 @@ namespace projetoCaixa.Controllers
 
             return BadRequest("Usuário e/ou senha incorretos");
             
-            }
-
         }
+
+    }
 }

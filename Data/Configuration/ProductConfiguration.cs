@@ -9,7 +9,7 @@ namespace projetoCaixa.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            
+            builder.HasOne(x => x.Users).WithMany(x => x.Products).HasForeignKey(x => x.UserId);
         }
     }
 }
