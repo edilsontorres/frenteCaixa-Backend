@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using projetoCaixa.Entites;
+using System.ComponentModel.DataAnnotations;
 
 namespace projetoCaixa.Models
 {
@@ -10,6 +11,7 @@ namespace projetoCaixa.Models
         public string? UserName { get; set; }
 
         public string? PasswordHash { get; set; }
+        //public ICollection<Product>? Products { get; set; }
 
     }
 }

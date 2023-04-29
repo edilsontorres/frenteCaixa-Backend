@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "7Ej68xZ2X8ieVxjeC1Xv9Ul9UKO6slFecBL/fo0tDRd7xB/55gEchHq0tnqNBrKf6WdVpVjffu/PIc2+KuhWOA==",
+  "dgSpecHash": "4+JqLuBaj9n5JbKIsqOsydicfkrRMnb5eVKzRpu/GRH1MeHW228ckcTB8vTDXRFmlnnE3oxUwgdHzcyf/OCOUw==",
   "success": true,
   "projectFilePath": "C:\\Projeto\\projetoCaixa\\projetoCaixa.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\edilson\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\edilson\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\edilson\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
+    "C:\\Users\\edilson\\.nuget\\packages\\fluentvalidation\\11.5.2\\fluentvalidation.11.5.2.nupkg.sha512",
     "C:\\Users\\edilson\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\edilson\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
     "C:\\Users\\edilson\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
