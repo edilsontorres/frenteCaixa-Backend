@@ -1,12 +1,14 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using projetoCaixa.Data;
+using projetoCaixa.Models;
 using projetoCaixa.Repositorie;
 using projetoCaixa.Repositorie.Iterfaces;
 using projetoCaixa.Service;
 using projetoCaixa.Service.Interfaces;
+using projetoCaixa.Service.Validate;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,7 +42,6 @@ builder.Services.AddAuthentication(x =>
             ValidateIssuer = false,
             ValidateAudience = false
 
-
         };
     });
 
@@ -50,6 +51,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IValidator<User>, UserValidation>();
 
 var app = builder.Build();
 
