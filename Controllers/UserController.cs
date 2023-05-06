@@ -51,17 +51,20 @@ namespace projetoCaixa.Controllers
             user.UserName = request.UserName;
             user.PasswordHash = passwordHash;
             return Ok(user.UserName);
-        }
-
-
-        [HttpDelete]
-        public ActionResult<User> RemoveUser(User request)
-        {
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.PasswordHash);
-
-            user.UserName = request.UserName;
-            user.PasswordHash = passwordHash;
-            return Ok(user.UserName);
         }*/
+
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> RemoveUser(int id)
+        {
+            var userBanco = await _userRepository.GetUser(id);
+            if(userBanco != null)
+            {
+                _userRepository.RemoveUser(userBanco);
+                await _userRepository.SalveAllAsync();
+                return Ok("Usuário deletado com sucesso!");
+            }
+            return BadRequest("Usuário não cadastrado na Base de Dados");
+        }
     }
 }

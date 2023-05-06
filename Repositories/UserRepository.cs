@@ -1,4 +1,6 @@
-﻿using projetoCaixa.Data;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
+using projetoCaixa.Data;
 using projetoCaixa.Models;
 using projetoCaixa.Repositorie.Iterfaces;
 
@@ -18,9 +20,9 @@ namespace projetoCaixa.Repositorie
             _context.Add(user);
             return Task<User>.FromResult(user);
         }
-        public async Task<User> GetUser(int Id)
+        public async Task<User> GetUser(int id)
         {
-            var users = await _context.Users.FindAsync(Id);
+            var users = await _context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
             return users!;
         }
         public Task<string> UpdateUser(User user)
@@ -28,9 +30,9 @@ namespace projetoCaixa.Repositorie
             throw new NotImplementedException();
         }
 
-        public Task<string> RemoveUser(int Id)
+        public void RemoveUser(User user)
         {
-            throw new NotImplementedException();
+           _context.Remove(user);
         }
 
         public async Task<bool> SalveAllAsync()

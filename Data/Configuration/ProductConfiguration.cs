@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using projetoCaixa.Entites;
-using projetoCaixa.Models;
 
 namespace projetoCaixa.Data.Configuration
 {

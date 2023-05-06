@@ -16,10 +16,10 @@ namespace projetoCaixa.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<Product> NewProduct(Product product)
+        public async Task<Product> NewProduct(Product product)
         {
-            _context.Add(product);
-            return Task<Product>.FromResult(product);
+            await _context.AddAsync(product);
+            return product;   
         }
 
         public Task<string> RemoveProduct(int Id)
