@@ -24,23 +24,34 @@ namespace projetoCaixa.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Product>> NewProduct(ProductDTO product)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Product>> GetProduct(int id)
+        {
+            var productRequest = await _productRepository.GetProduct(id);
+            if (productRequest != null)
+            {
+                var productResponse = _mapper.Map<ProductResponseDTO>(productRequest);
+                return Ok(productResponse);
+            }
+            return NotFound("Produto não encontrado!");
+        }
+
+        [HttpPost("create")]
+        public async Task<ActionResult<Product>> NewProduct(ProductRequestDTO product)
         {
             var userBanco = await _context.Users.FindAsync(product.UserId);
 
-            if (userBanco == null)
+            if (userBanco != null)
             {
-                return NotFound("Usuário não encontrado!");
+                var newProduct = _mapper.Map<Product>(product);
+                await _productRepository.NewProduct(newProduct);
+                await _productRepository.SalveAllAsync();
+                return Ok("Produto cadastrado com sucesso!");
+
             }
 
-            var newProduct = _mapper.Map<Product>(product);
+            return NotFound("Usuário não encontrado!");
 
-            await _productRepository.NewProduct(newProduct);
-            await _productRepository.SalveAllAsync();
-
-            
-            return Ok(newProduct);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace projetoCaixa.DTOs
 {
-    public class ProductDTO
+    public class ProductRequestDTO
     {
         public string? Descricao { get; set; }
         public float Preco { get; set; }
