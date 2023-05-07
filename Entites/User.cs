@@ -1,5 +1,4 @@
 ﻿using projetoCaixa.Entites;
-using System.ComponentModel.DataAnnotations;
 
 namespace projetoCaixa.Models
 {

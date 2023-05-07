@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using projetoCaixa.Data;
+using projetoCaixa.DTOs;
 using projetoCaixa.DTOs.Mappers;
 using projetoCaixa.Models;
 using projetoCaixa.Repositorie;
@@ -55,7 +56,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddTransient<IValidator<User>, UserValidation>();
+builder.Services.AddTransient<IValidator<UserRequesteDTO>, UserValidation>();
 builder.Services.AddAutoMapper(typeof(ProductMappers));
 
 var app = builder.Build();

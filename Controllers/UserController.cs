@@ -1,5 +1,7 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using projetoCaixa.DTOs;
 using projetoCaixa.Entites.Validate.Errors;
 using projetoCaixa.Models;
 using projetoCaixa.Repositorie.Iterfaces;
@@ -8,22 +10,36 @@ using projetoCaixa.Repositorie.Iterfaces;
 namespace projetoCaixa.Controllers
 {
     [ApiController]
-    [Route("api/cadastro")]
+    [Route("api/user")]
     public class UserController : Controller
     {
         private readonly IUserRepository _userRepository;
-        private readonly IValidator<User> _validator;
-       
-        
-        public UserController(IUserRepository userRepository, IValidator<User> validator)
+        private readonly IValidator<UserRequesteDTO> _validator;
+        private readonly IMapper _mapper;
+
+        public UserController(IUserRepository userRepository, IValidator<UserRequesteDTO> validator, IMapper mapper)
         {
             _userRepository = userRepository;
             _validator = validator;
+            _mapper = mapper;
             
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<User>> GetUser(int id)
+        {
+            var userRequest = await _userRepository.GetUser(id);
+            if(userRequest != null)
+            {
+                var userResponse = _mapper.Map<UserResponseDTO>(userRequest);
+                return Ok(userResponse);
+            }
+
+            return NotFound("Usuário não cadastrado!");
+        }
         
-        [HttpPost]
-        public async Task<ActionResult> NewUser(User user)
+        [HttpPost("cadastro")]
+        public async Task<ActionResult<User>> NewUser(UserRequesteDTO user)
         {
             var userValidator = _validator.Validate(user);
             if (!userValidator.IsValid)
@@ -33,7 +49,8 @@ namespace projetoCaixa.Controllers
 
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash);
             user.PasswordHash = passwordHash;
-            await _userRepository.NewUser(user);
+            var userRequest = _mapper.Map<User>(user);
+            await _userRepository.NewUser(userRequest);
 
            if(await _userRepository.SalveAllAsync())
            {

@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
+using projetoCaixa.DTOs;
 using projetoCaixa.Models;
 
 namespace projetoCaixa.Service.Validate
 {
-    public class UserValidation : AbstractValidator<User>
+    public class UserValidation : AbstractValidator<UserRequesteDTO>
     {
         public UserValidation()
         {

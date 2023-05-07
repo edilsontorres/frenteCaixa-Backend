@@ -15,10 +15,10 @@ namespace projetoCaixa.Repositorie
             _context = context;
         }
 
-        public Task<User> NewUser(User user)
+        public async Task<User> NewUser(User user)
         {
             _context.Add(user);
-            return Task<User>.FromResult(user);
+            return user;
         }
         public async Task<User> GetUser(int id)
         {
