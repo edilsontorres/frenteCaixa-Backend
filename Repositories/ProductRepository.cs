@@ -11,9 +11,10 @@ namespace projetoCaixa.Repositories
         {
             _context = context;
         }
-        public Task<Product> GetProduct(int Id)
+        public async Task<Product> GetProduct(int Id)
         {
-            throw new NotImplementedException();
+            var product = await _context.Products.FindAsync(Id);
+            return product!;
         }
 
         public async Task<Product> NewProduct(Product product)
