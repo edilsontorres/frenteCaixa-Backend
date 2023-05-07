@@ -1,11 +1,10 @@
-﻿using projetoCaixa.Models;
-
-namespace projetoCaixa.DTOs
+﻿namespace projetoCaixa.DTOs
 {
-    public class ProductResponseDTO
+    public class ProductDTO
     {
         public string? Descricao { get; set; }
         public float Preco { get; set; }
         public int Estoque { get; set; }
+        public int UserId { get; set; }
     }
 }

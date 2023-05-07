@@ -7,8 +7,7 @@ namespace projetoCaixa.DTOs.Mappers
     {
         public ProductMappers() 
         {
-            CreateMap<Product, ProductRequestDTO>().ReverseMap();
-            CreateMap<Product, ProductResponseDTO>().ReverseMap();
+            CreateMap<Product, ProductDTO>().ReverseMap();
         }
     }
 }
