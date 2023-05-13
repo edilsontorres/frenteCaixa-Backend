@@ -60,15 +60,21 @@ namespace projetoCaixa.Controllers
            return BadRequest("Algo deu errado!");
         }
 
-        /*[HttpPost("update")]
-        public ActionResult<User> UpdateUser(User request)
-        {
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.PasswordHash);
+        [HttpPut("update/{id}")]
+        public async Task<ActionResult> UpdateUser(UserRequesteDTO user, int id)
+        { 
+            var users = await _userRepository.GetUser(id);
+            if (users == null) return BadRequest("Usuário não cadastrado!");  
 
-            user.UserName = request.UserName;
-            user.PasswordHash = passwordHash;
-            return Ok(user.UserName);
-        }*/
+            var userAtualizar = _mapper.Map(user, users);
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword(userAtualizar.PasswordHash);
+            users.PasswordHash = passwordHash;
+            await _userRepository.UpdateUser(userAtualizar);
+
+            return await _userRepository.SalveAllAsync()
+                        ? Ok("Usuário altualizado com sucesso!")
+                        : BadRequest("Erro ao atualizar usuário");
+        }
 
 
         [HttpDelete("{id}")]
