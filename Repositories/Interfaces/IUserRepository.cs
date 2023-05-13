@@ -8,7 +8,7 @@ namespace projetoCaixa.Repositorie.Iterfaces
 
         Task<User> GetUser(int id);
 
-        Task<string> UpdateUser(User user);
+        Task UpdateUser(User user);
 
         public void RemoveUser(User user);
         

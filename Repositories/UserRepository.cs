@@ -17,7 +17,7 @@ namespace projetoCaixa.Repositorie
 
         public async Task<User> NewUser(User user)
         {
-            _context.Add(user);
+            await _context.AddAsync(user);
             return user;
         }
         public async Task<User> GetUser(int id)
@@ -25,9 +25,9 @@ namespace projetoCaixa.Repositorie
             var users = await _context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
             return users!;
         }
-        public Task<string> UpdateUser(User user)
+        public async Task UpdateUser(User user)
         {
-            throw new NotImplementedException();
+            _context.Entry(user).State = EntityState.Modified;
         }
 
         public void RemoveUser(User user)
