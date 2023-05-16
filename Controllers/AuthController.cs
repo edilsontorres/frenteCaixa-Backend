@@ -23,7 +23,6 @@ namespace projetoCaixa.Controllers
             _tokenService = tokenService;
             _context = dataContext;
             _mapper = mapper;
-           
         }
 
         [HttpPost]
@@ -36,15 +35,9 @@ namespace projetoCaixa.Controllers
 
             if(userRepository != null)
             {
-
-                if(users.UserName != userRepository.UserName || !BCrypt.Net.BCrypt.Verify(users.PasswordHash, userRepository.PasswordHash))  
-                {
-                    return BadRequest("Usuário e/ou senha incorretos");
-                }
-                else
-                {
-                    return Ok(tokenService);
-                }
+                return (users.UserName != userRepository.UserName || !BCrypt.Net.BCrypt.Verify(users.PasswordHash, userRepository.PasswordHash)) 
+                    ? BadRequest("Usuário e / ou senha incorretos") 
+                    : Ok(tokenService);
             }
 
             return BadRequest("Usuário e/ou senha incorretos");
