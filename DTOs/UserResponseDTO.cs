@@ -1,4 +1,5 @@
-﻿namespace projetoCaixa.DTOs
+﻿
+namespace projetoCaixa.DTOs
 {
     public class UserResponseDTO
     {

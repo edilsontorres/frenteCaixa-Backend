@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using projetoCaixa.DTOs;
 using projetoCaixa.Entites.Validate.Errors;
@@ -25,17 +26,24 @@ namespace projetoCaixa.Controllers
             
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        [HttpGet]
+        public async Task<ActionResult> GetUser()
         {
-            var userRequest = await _userRepository.GetUser(id);
-            if(userRequest != null)
-            {
-                var userResponse = _mapper.Map<UserResponseDTO>(userRequest);
-                return Ok(userResponse);
-            }
+            var user = await _userRepository.GetUser();
+            return (user != null) ? Ok(user) : BadRequest("Ocorreu algum erro com a solicitação!");
+        }
 
-            return NotFound("Usuário não cadastrado!");
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetUserById(int id)
+        {
+            var userRequest = await _userRepository.GetUserById(id);
+
+            var userResponse = _mapper.Map<UserDetailsResponseDTO>(userRequest);
+
+           return (userResponse != null) 
+                ? Ok(userResponse) 
+                : NotFound("Usuário não cadastrado!");
+
         }
         
         [HttpPost("cadastro")]
@@ -63,7 +71,7 @@ namespace projetoCaixa.Controllers
         [HttpPut("update/{id}")]
         public async Task<ActionResult> UpdateUser(UserRequesteDTO user, int id)
         { 
-            var users = await _userRepository.GetUser(id);
+            var users = await _userRepository.GetUserById(id);
             if (users == null) return BadRequest("Usuário não cadastrado!");  
 
             var userAtualizar = _mapper.Map(user, users);
@@ -80,7 +88,7 @@ namespace projetoCaixa.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> RemoveUser(int id)
         {
-            var userBanco = await _userRepository.GetUser(id);
+            var userBanco = await _userRepository.GetUserById(id);
             if(userBanco != null)
             {
                 _userRepository.RemoveUser(userBanco);

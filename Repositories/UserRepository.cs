@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using projetoCaixa.Data;
+using projetoCaixa.DTOs;
 using projetoCaixa.Models;
 using projetoCaixa.Repositorie.Iterfaces;
 
@@ -20,14 +20,20 @@ namespace projetoCaixa.Repositorie
             await _context.AddAsync(user);
             return user;
         }
-        public async Task<User> GetUser(int id)
+
+        public async Task<IEnumerable<UserResponseDTO>> GetUser()
         {
-            var users = await _context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
+           return await _context.Users.Select(u => new UserResponseDTO{ Id = u.Id, UserName = u.UserName }).ToListAsync();
+           
+        }
+        public async Task<User> GetUserById(int id)
+        {
+            var users = await _context.Users.Include(x => x.Products).Where(x => x.Id == id).FirstOrDefaultAsync();
             return users!;
         }
         public async Task UpdateUser(User user)
         {
-            _context.Entry(user).State = EntityState.Modified;
+             _context.Entry(user).State = EntityState.Modified;
         }
 
         public void RemoveUser(User user)

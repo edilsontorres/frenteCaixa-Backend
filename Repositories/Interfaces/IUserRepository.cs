@@ -1,4 +1,5 @@
-﻿using projetoCaixa.Models;
+﻿using projetoCaixa.DTOs;
+using projetoCaixa.Models;
 
 namespace projetoCaixa.Repositorie.Iterfaces
 {
@@ -6,7 +7,9 @@ namespace projetoCaixa.Repositorie.Iterfaces
     {
         Task<User> NewUser(User user);
 
-        Task<User> GetUser(int id);
+        Task<IEnumerable<UserResponseDTO>> GetUser();
+
+        Task<User> GetUserById(int id);
 
         Task UpdateUser(User user);
 

@@ -9,6 +9,7 @@ namespace projetoCaixa.DTOs.Mappers
         {
             CreateMap<User, UserRequesteDTO>().ReverseMap();
             CreateMap<User, UserResponseDTO>().ReverseMap();
+            CreateMap<User, UserDetailsResponseDTO>().ReverseMap();
         }
     }
 }
