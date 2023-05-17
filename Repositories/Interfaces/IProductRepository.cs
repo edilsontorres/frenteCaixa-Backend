@@ -1,16 +1,19 @@
-﻿using projetoCaixa.Entites;
+﻿using projetoCaixa.DTOs;
+using projetoCaixa.Entites;
 
 namespace projetoCaixa.Repositories.Interfaces
 {
     public interface IProductRepository
     {
+        Task<IEnumerable<ProductResponseDTO>> GetProduct();
+        
         Task<Product> NewProduct(Product product);
 
-        Task<Product> GetProduct(int Id);
+        Task<Product> GetProductById(int Id);
 
-        Task<string> UpdateProduct(Product product);
+        Task UpdateProduct(Product product);
 
-        Task<string> RemoveProduct(int Id);
+        public void RemoveProduct(Product product);
 
         Task<bool> SalveAllAsync();
     }

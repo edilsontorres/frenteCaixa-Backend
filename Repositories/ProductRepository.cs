@@ -1,4 +1,6 @@
-﻿using projetoCaixa.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using projetoCaixa.Data;
+using projetoCaixa.DTOs;
 using projetoCaixa.Entites;
 using projetoCaixa.Repositories.Interfaces;
 
@@ -11,7 +13,19 @@ namespace projetoCaixa.Repositories
         {
             _context = context;
         }
-        public async Task<Product> GetProduct(int Id)
+
+        public async Task<IEnumerable<ProductResponseDTO>> GetProduct()
+        {
+           return await _context.Products.Select(x => new ProductResponseDTO 
+                                                      { 
+                                                         Id = x.Id, 
+                                                         Descricao = x.Descricao, 
+                                                         Estoque = x.Estoque, 
+                                                         Preco = x.Preco
+                                                      })
+                                                      .ToListAsync();
+        }
+        public async Task<Product> GetProductById(int Id)
         {
             var product = await _context.Products.FindAsync(Id);
             return product!;
@@ -23,9 +37,14 @@ namespace projetoCaixa.Repositories
             return product;   
         }
 
-        public Task<string> RemoveProduct(int Id)
+        public async Task UpdateProduct(Product product)
         {
-            throw new NotImplementedException();
+            _context.Entry(product).State = EntityState.Modified;
+        }
+
+        public void RemoveProduct(Product product)
+        {
+            _context.Remove(product);
         }
 
         public async Task<bool> SalveAllAsync()
@@ -33,9 +52,6 @@ namespace projetoCaixa.Repositories
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public Task<string> UpdateProduct(Product product)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
