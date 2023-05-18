@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using projetoCaixa.DTOs;
 using projetoCaixa.Entites.Validate.Errors;
@@ -27,6 +27,7 @@ namespace projetoCaixa.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult> GetUser()
         {
             var user = await _userRepository.GetUser();
@@ -34,6 +35,7 @@ namespace projetoCaixa.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult> GetUserById(int id)
         {
             var userRequest = await _userRepository.GetUserById(id);
@@ -47,6 +49,7 @@ namespace projetoCaixa.Controllers
         }
         
         [HttpPost("cadastro")]
+        [Authorize]
         public async Task<ActionResult<User>> NewUser(UserRequesteDTO user)
         {
             var userValidator = _validator.Validate(user);
@@ -69,6 +72,7 @@ namespace projetoCaixa.Controllers
         }
 
         [HttpPut("update/{id}")]
+        [Authorize]
         public async Task<ActionResult> UpdateUser(UserRequesteDTO user, int id)
         { 
             var users = await _userRepository.GetUserById(id);
@@ -86,6 +90,7 @@ namespace projetoCaixa.Controllers
 
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult> RemoveUser(int id)
         {
             var userBanco = await _userRepository.GetUserById(id);

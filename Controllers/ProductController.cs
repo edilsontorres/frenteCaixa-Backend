@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using projetoCaixa.Data;
 using projetoCaixa.DTOs;
@@ -25,6 +26,7 @@ namespace projetoCaixa.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<ProductResponseDTO>> GetProduct()
         {
             var teste = await _productRepository.GetProduct();
@@ -44,6 +46,7 @@ namespace projetoCaixa.Controllers
         }
 
         [HttpPost("create")]
+        [Authorize]
         public async Task<ActionResult<Product>> NewProduct(ProductRequestDTO product)
         {
             var userBanco = await _context.Users.FindAsync(product.UserId);
@@ -61,6 +64,7 @@ namespace projetoCaixa.Controllers
         }
 
         [HttpPut("update/{id}")]
+        [Authorize]
         public async Task<ActionResult<Product>> UpdateProduct(ProductRequestDTO product, int id)
         {
             var productBanco = await _context.Products.FindAsync(id);
@@ -76,6 +80,7 @@ namespace projetoCaixa.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult> RemoveProduct(int id)
         {
             var product = await _productRepository.GetProductById(id);
