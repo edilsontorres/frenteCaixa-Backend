@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using projetoCaixa.Data;
 
@@ -11,9 +12,11 @@ using projetoCaixa.Data;
 namespace projetoCaixa.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230519235323_VendasRelacionamento")]
+    partial class VendasRelacionamento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,9 +25,9 @@ namespace projetoCaixa.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("projetoCaixa.Entites.ItemVenda", b =>
+            modelBuilder.Entity("projetoCaixa.Entites.ItensVenda", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("IdVenda")
                         .HasColumnType("int");
 
                     b.Property<int>("IdProduct")
@@ -36,14 +39,9 @@ namespace projetoCaixa.Migrations
                     b.Property<float>("ValorUnitario")
                         .HasColumnType("real");
 
-                    b.Property<int?>("VendaId")
-                        .HasColumnType("int");
+                    b.HasKey("IdVenda", "IdProduct");
 
-                    b.HasKey("Id", "IdProduct");
-
-                    b.HasIndex("VendaId");
-
-                    b.ToTable("ItemVendas");
+                    b.ToTable("ItensVendas");
                 });
 
             modelBuilder.Entity("projetoCaixa.Entites.Product", b =>
@@ -60,23 +58,23 @@ namespace projetoCaixa.Migrations
                     b.Property<int>("Estoque")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ItemVendaId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ItemVendaIdProduct")
-                        .HasColumnType("int");
-
                     b.Property<float>("Preco")
                         .HasColumnType("real");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("VendasIdProduct")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("VendasIdVenda")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("ItemVendaId", "ItemVendaIdProduct");
+                    b.HasIndex("VendasIdVenda", "VendasIdProduct");
 
                     b.ToTable("Products");
                 });
@@ -92,18 +90,21 @@ namespace projetoCaixa.Migrations
                     b.Property<DateTime>("DataVenda")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ItensVendaIdProduct")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ItensVendaIdVenda")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
                     b.Property<float>("ValorTotal")
                         .HasColumnType("real");
 
-                    b.Property<int?>("userId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("ItensVendaIdVenda", "ItensVendaIdProduct");
 
                     b.ToTable("Vendas");
                 });
@@ -128,13 +129,6 @@ namespace projetoCaixa.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("projetoCaixa.Entites.ItemVenda", b =>
-                {
-                    b.HasOne("projetoCaixa.Entites.Venda", null)
-                        .WithMany("ItemVenda")
-                        .HasForeignKey("VendaId");
-                });
-
             modelBuilder.Entity("projetoCaixa.Entites.Product", b =>
                 {
                     b.HasOne("projetoCaixa.Models.User", "Users")
@@ -143,30 +137,29 @@ namespace projetoCaixa.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("projetoCaixa.Entites.ItemVenda", null)
+                    b.HasOne("projetoCaixa.Entites.ItensVenda", "Vendas")
                         .WithMany("Products")
-                        .HasForeignKey("ItemVendaId", "ItemVendaIdProduct");
+                        .HasForeignKey("VendasIdVenda", "VendasIdProduct");
 
                     b.Navigation("Users");
+
+                    b.Navigation("Vendas");
                 });
 
             modelBuilder.Entity("projetoCaixa.Entites.Venda", b =>
                 {
-                    b.HasOne("projetoCaixa.Models.User", "user")
-                        .WithMany()
-                        .HasForeignKey("userId");
+                    b.HasOne("projetoCaixa.Entites.ItensVenda", "ItensVenda")
+                        .WithMany("Vendas")
+                        .HasForeignKey("ItensVendaIdVenda", "ItensVendaIdProduct");
 
-                    b.Navigation("user");
+                    b.Navigation("ItensVenda");
                 });
 
-            modelBuilder.Entity("projetoCaixa.Entites.ItemVenda", b =>
+            modelBuilder.Entity("projetoCaixa.Entites.ItensVenda", b =>
                 {
                     b.Navigation("Products");
-                });
 
-            modelBuilder.Entity("projetoCaixa.Entites.Venda", b =>
-                {
-                    b.Navigation("ItemVenda");
+                    b.Navigation("Vendas");
                 });
 
             modelBuilder.Entity("projetoCaixa.Models.User", b =>

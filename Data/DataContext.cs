@@ -9,6 +9,8 @@ namespace projetoCaixa.Data
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Venda> Vendas { get; set; }
+        public DbSet<ItemVenda> ItemVendas { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options) : base (options)
         {
@@ -20,6 +22,7 @@ namespace projetoCaixa.Data
 
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new ItemVendaConfiguration());
         }
 
     }
