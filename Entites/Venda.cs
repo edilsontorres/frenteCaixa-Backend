@@ -4,17 +4,17 @@ namespace projetoCaixa.Entites
 {
     public class Venda
     {
-        public int Id {get; set;}
+        public int Id { get; set; }
 
-        public DateTime DataVenda { get; set;}
-
-        public float ValorTotal { get; set; }
+        public double ValorTotal { get; set; }
 
         public bool Status { get; set; }
 
-        public User? user { get; set; }
+        public DateTime DataVenda { get; set; }
 
-        public List<ItemVenda>? ItemVenda { get; set; }
+        public User? Users { get; set; }
+
+        public ICollection<ItemVenda>? ItemVenda { get; set; }
         
     }
 }
