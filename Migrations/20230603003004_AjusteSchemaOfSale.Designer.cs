@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using projetoCaixa.Data;
 
@@ -11,9 +12,11 @@ using projetoCaixa.Data;
 namespace projetoCaixa.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230603003004_AjusteSchemaOfSale")]
+    partial class AjusteSchemaOfSale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,12 +45,13 @@ namespace projetoCaixa.Migrations
                     b.Property<int>("Quantidade")
                         .HasColumnType("int");
 
-                    b.Property<int>("VendaId")
+                    b.Property<int?>("VendaId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
                     b.HasIndex("VendaId");
 
@@ -131,20 +135,16 @@ namespace projetoCaixa.Migrations
             modelBuilder.Entity("projetoCaixa.Entites.ItemVenda", b =>
                 {
                     b.HasOne("projetoCaixa.Entites.Product", "Products")
-                        .WithMany("ItemVendas")
-                        .HasForeignKey("ProductId")
+                        .WithOne("Venda")
+                        .HasForeignKey("projetoCaixa.Entites.ItemVenda", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("projetoCaixa.Entites.Venda", "Vendas")
+                    b.HasOne("projetoCaixa.Entites.Venda", null)
                         .WithMany("ItemVenda")
-                        .HasForeignKey("VendaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VendaId");
 
                     b.Navigation("Products");
-
-                    b.Navigation("Vendas");
                 });
 
             modelBuilder.Entity("projetoCaixa.Entites.Product", b =>
@@ -169,7 +169,7 @@ namespace projetoCaixa.Migrations
 
             modelBuilder.Entity("projetoCaixa.Entites.Product", b =>
                 {
-                    b.Navigation("ItemVendas");
+                    b.Navigation("Venda");
                 });
 
             modelBuilder.Entity("projetoCaixa.Entites.Venda", b =>

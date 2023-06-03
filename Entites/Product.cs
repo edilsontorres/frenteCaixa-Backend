@@ -18,7 +18,7 @@ namespace projetoCaixa.Entites
 
         public int UserId { get; set; }
 
-        public ItemVenda? Venda { get; set; }
+        public ICollection<ItemVenda>? ItemVendas { get; set; }
        
     }
 }

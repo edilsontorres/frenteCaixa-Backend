@@ -26,6 +26,7 @@ namespace projetoCaixa.Data
 
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new ItemVendaConfiguration());
         }
 
     }

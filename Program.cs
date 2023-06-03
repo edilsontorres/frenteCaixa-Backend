@@ -13,6 +13,7 @@ using projetoCaixa.Repositories.Interfaces;
 using projetoCaixa.Service;
 using projetoCaixa.Service.Interfaces;
 using projetoCaixa.Service.Validate;
+using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -56,8 +57,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IVendaRepository, VendaRepository>();
+builder.Services.AddScoped<IVendaItem, ItemVendaRepository>();
 builder.Services.AddTransient<IValidator<UserRequesteDTO>, UserValidation>();
 builder.Services.AddAutoMapper(typeof(ProductMappers));
+
 
 var app = builder.Build();
 
